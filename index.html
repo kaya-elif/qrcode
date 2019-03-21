@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="qrcode.js">
+</script>
+    <script type="text/javascript" src="html5-qrcode.js">
+</script>
+    <title>
+      QRCode Generator
+    </title>
+    <style type="text/css" media="screen">
+      body { text-align:center; }
+    </style>
+  </head>
+  <body>
+    <h1>
+      QRCode Generator
+    </h1>
+    <form name="QRform" id="QRform">
+      <textarea name="textField" rows="8" cols="50" onkeyup='updateQRCode(this.value)' onclick="this.focus();this.select();">Type in here and watch the QR code below update.</textarea>
+    </form>
+
+    <h3>
+      Select a foreground color, it will be updated when the text field is updated:)
+    </h3>
+    <select name="colorlist" id="colorList">
+      <option value=pink>pink</option>
+      <option value=purple>purple</option>
+      <option value=orange>orange</option>
+      <option value=blue>blue</option>
+      <option value=black>black</option>
+    </select>
+
+
+    <!-- This is where our QRCode will appear in. -->
+    <div id="qrcode"></div>
+
+    <script type="text/javascript">
+      function updateQRCode(text, value) {
+        var element = document.getElementById("qrcode");
+        var bodyElement = document.body;
+        var color = document.getElementById("colorList");
+        var colorr= color.options[color.selectedIndex].text;
+        if(element.lastChild)
+          element.replaceChild(showQRCode(text,colorr), element.lastChild);
+        else
+          element.appendChild(showQRCode(text,colorr ));
+      }
+      updateQRCode('Type in here and watch the QR code below update.');
+    </script>
+  </body>
+
+
+
+<html>
+<form enctype="multipart/form-data" action="http://api.qrserver.com/v1/read-qr-code/" method="POST">
+<!-- MAX_FILE_SIZE (maximum file size in bytes) must precede the file input field used to upload the QR code image -->
+<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+<!-- The "name" of the input field has to be "file" as it is the name of the POST parameter -->
+Choose QR code image to read/scan: <input name="file" type="file" />
+<input type="submit" value="Read QR code" />
+</form>
+</html>
+</html>
